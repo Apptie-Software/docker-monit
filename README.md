@@ -18,8 +18,6 @@ Monit is a monitoring utility meant to be used together with M/Monit
 ```sh
 docker create \
   --name=monit \
-  -e PUID=1000 \
-  -e PGID=1000 \
   -e MONIT_PORT=2812 \
   -e TZ=Europe/Kyiv \
   -e MMONIT_URL="https://USERNAME:PASSWORD@mmonit.your.domain:8080/collector"
@@ -37,8 +35,6 @@ services:
     image: Apptie-Software/monit
     container_name: monit
     environment:
-      PUID: 1000
-      PGID: 1000
       MONIT_PORT: 2812
       TZ: Europe/Kyiv
       MMONIT_URL: "https://USERNAME:PASSWORD@mmonit.your.domain:8080/collector"
@@ -62,9 +58,8 @@ You can set a custom port with `MONIT_PORT`
 
 | Variable        | Function                                |
 | ---        | --------                                |
-| PUID=1000  | for UserID - see below for explanation  |
-| PGID=1000  | for GroupID - see below for explanation |
 | MONIT_PORT=2812  | 2812 is the default port, you can set your own. |
+| MONIT_VERSION=5.9  | 5.9 is the latest version at the moment of writing, you can set your own. |
 | TZ=UTC     | Specify a timezone to use EG UTC        |
 | MMONIT_URL | URL used to communicate with M/Monit    |
 | MMONIT_USERNAME | Username for logging into M/Monit    |

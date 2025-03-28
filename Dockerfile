@@ -7,8 +7,6 @@ ENV \
   MONIT_VERSION="5.34.4" \
   MMONIT_URL=
 
-# Configuration
-COPY ./etc /etc
 
 # install Monit
 RUN set -x\
@@ -40,8 +38,8 @@ RUN set -x\
   && rm -rf /tmp/* \
   && apk del mybuild
 
-# set ownership to root
-ADD --chown=0:0 ./etc /etc
+# Copy configuration and set ownership to root
+COPY --chown=0:0 ./etc /etc/
 
 # monitrc must have permissions not higher than 600
 RUN set -x \
@@ -56,4 +54,4 @@ HEALTHCHECK --start-period=300s --interval=30s --timeout=30s --retries=3 CMD ["m
 
 ENTRYPOINT ["/etc/monit/entrypoint.sh"]
 
-CMD ["/usr/local/bin/monit", "-I"]
+CMD ["/usr/bin/monit", "-I"]

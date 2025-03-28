@@ -98,3 +98,7 @@ set httpd port ${MONIT_PORT}
 ```cfg
 set monit ${MMONIT_URL}
 ```
+
+## TODO
+
+- search for the latest Monit version on the dist

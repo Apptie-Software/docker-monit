@@ -4,7 +4,7 @@ FROM alpine:3.21
 ENV \
   MONIT_PORT=2812 \
   TZ=UTC \
-  MONIT_VERSION="5.9" \
+  MONIT_VERSION="5.34.4" \
   MMONIT_URL=
 
 # Configuration
@@ -15,6 +15,7 @@ RUN set -x\
   && apk add --no-cache --virtual mybuild \
   build-base \
   && apk add --no-cache \
+  musl \
   openssl-dev \
   lm-sensors \
   libltdl \
@@ -26,9 +27,14 @@ RUN set -x\
   && wget "https://mmonit.com/monit/dist/monit-${MONIT_VERSION}.tar.gz" \
   && tar -zxvf "monit-${MONIT_VERSION}.tar.gz" \
   && cd "monit-${MONIT_VERSION}" \
-  && ./configure --sysconfdir /etc/monit \
+  && ./configure \
+  --prefix=/usr \
+  --sysconfdir /etc/monit \
+  --mandir=/usr/share/man \
+  --localstatedir=/etc/monit/instance \
   --without-pam \
-  && make -j$(nproc) \
+  && make -j $(nproc) \
+  && make check \
   && make install \
   && cd \
   && rm -rf /tmp/* \

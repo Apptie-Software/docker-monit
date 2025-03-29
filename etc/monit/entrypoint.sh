@@ -20,8 +20,9 @@ set httpd
     allow "::1"
     allow ${NETWORK}/${NETMASK}
     allow ${MMONIT_USERNAME}:${MMONIT_PASSWORD}
-
 EOF
+	chmod 0700 /etc/monit/config/httpd.cfg
+	monit -t -c /etc/monit/config/httpd.cfg
 fi
 
 # M/Monit connection string

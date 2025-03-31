@@ -39,10 +39,12 @@ RUN set -x\
   && apk del mybuild
 
 # Copy configuration and set ownership to root
-# monitrc must have permissions not higher than 600
-COPY --chown=0:0 --chmod=600 ./etc /etc/
+COPY ./etc /etc/
 
+# monitrc must have permissions not higher than 600
 RUN set -x \
+  && chown 0:0 /etc/monit/monitrc \
+  && chmod 600 /etc/monit/monitrc \
   && mkdir -p /run/lock
 
 EXPOSE ${MONIT_PORT}

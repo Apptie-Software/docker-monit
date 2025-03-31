@@ -18,7 +18,7 @@ set httpd
     port ${MONIT_PORT}
     allow localhost
     allow "::1"
-    allow ${NETWORK}/${NETMASK}
+#   allow ${NETWORK}/${NETMASK}
     allow ${MMONIT_USERNAME}:${MMONIT_PASSWORD}
 EOF
 	chmod 0700 /etc/monit/config/httpd.cfg

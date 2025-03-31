@@ -5,7 +5,7 @@ ENV \
   MONIT_PORT=2812 \
   TZ=UTC \
   MONIT_VERSION="5.34.4" \
-  MMONIT_URL=
+  MMONIT_URL=http://localhost:8080
 
 
 # install Monit

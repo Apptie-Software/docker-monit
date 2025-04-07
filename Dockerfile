@@ -5,6 +5,8 @@ ENV \
   MONIT_PORT=2812 \
   TZ=UTC \
   MONIT_VERSION="5.34.4" \
+  MMONIT_USERNAME="monit" \
+  MMONIT_PASSWORD="monit" \
   MMONIT_URL=http://localhost:8080
 
 

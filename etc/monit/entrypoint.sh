@@ -10,6 +10,9 @@ MONIT_PORT=${MONIT_PORT:-2812}
 MMONIT_USERNAME=${MMONIT_USERNAME:-admin}
 MMONIT_PASSWORD=${MMONIT_PASSWORD:-changeme}
 
+# network & netmask
+eval "$(ifconfig eth0 | awk -F'[: ]+' '/inet/{print "NETWORK=" $4 " NETMASK=" $8}')"
+
 if [ ! -f /etc/monit/config/httpd.cfg ]; then
 	touch /etc/monit/config/httpd.cfg
 	cat <<EOF >>/etc/monit/config/httpd.cfg
@@ -18,7 +21,7 @@ set httpd
     port ${MONIT_PORT}
     allow localhost
     allow "::1"
-#   allow ${NETWORK}/${NETMASK}
+    allow ${NETWORK}/${NETMASK}
     allow ${MMONIT_USERNAME}:${MMONIT_PASSWORD}
 EOF
 	chmod 0700 /etc/monit/config/httpd.cfg

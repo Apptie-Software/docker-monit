@@ -7,11 +7,12 @@ echo "${TZ}" >/etc/timezone
 
 # httpd
 MONIT_PORT=${MONIT_PORT:-2812}
+
+# -- network & netmask
+eval "$(ifconfig eth0 | awk -F'[: ]+' '/inet/{print "NETWORK=" $4 " NETMASK=" $8}')"
+
 MMONIT_USERNAME=${MMONIT_USERNAME:-admin}
 MMONIT_PASSWORD=${MMONIT_PASSWORD:-changeme}
-
-# network & netmask
-eval "$(ifconfig eth0 | awk -F'[: ]+' '/inet/{print "NETWORK=" $4 " NETMASK=" $8}')"
 
 if [ ! -f /etc/monit/config/httpd.cfg ]; then
 	touch /etc/monit/config/httpd.cfg
@@ -29,6 +30,11 @@ EOF
 fi
 
 # M/Monit connection string
+MMONIT_PORT=${MMONIT_PORT:-8080}
+MMONIT_MODE=${MMONIT_MODE:-http}
+MMONIT_DOMAIN=${MMONIT_DOMAIN:-your.domain.com}
+MMONIT_URL=${MMONIT_URL:-"${MMONIT_MODE}://${MMONIT_USERNAME}:${MMONIT_PASSWORD}@${MMONIT_DOMAIN}:${MMONIT_PORT}"}
+
 if [ ! -f /etc/monit/config/mmonit.cfg ]; then
 	touch /etc/monit/config/mmonit.cfg
 	cat <<EOF >>/etc/monit/config/mmonit.cfg

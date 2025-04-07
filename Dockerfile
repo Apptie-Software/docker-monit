@@ -7,7 +7,10 @@ ENV \
   MONIT_VERSION="5.34.4" \
   MMONIT_USERNAME="monit" \
   MMONIT_PASSWORD="monit" \
-  MMONIT_URL=http://localhost:8080
+  MMONIT_DOMAIN="localhost" \
+  MMONIT_MODE="http" \
+  MMONIT_PORT=8080 \
+  MMONIT_URL="${MMONIT_MODE}://${MMONIT_USERNAME}:${MMONIT_PASSWORD}@${MMONIT_DOMAIN}:${MMONIT_PORT}"
 
 
 # install Monit
@@ -57,4 +60,4 @@ HEALTHCHECK --start-period=300s --interval=30s --timeout=30s --retries=3 CMD ["m
 
 ENTRYPOINT ["/etc/monit/entrypoint.sh"]
 
-CMD ["/usr/bin/monit", "-I"]
+CMD ["/usr/bin/monit", "-I", "-c", "/etc/monit/monitrc"]

@@ -61,9 +61,17 @@ You can set a custom port with `MONIT_PORT`
 | MONIT_PORT=2812  | 2812 is the default port, you can set your own. |
 | MONIT_VERSION=5.9  | 5.9 is the latest version at the moment of writing, you can set your own. |
 | TZ=UTC     | Specify a timezone to use EG UTC        |
-| MMONIT_URL | URL used to communicate with M/Monit    |
+| *MMONIT_PORT=8080 | port used by M/Monit    |
+| *MMONIT_URL= | full URL used to communicate with M/Monit    |
+| *MMONIT_DOMAIN=your.domain.com | domain used by M/Monit    |
+| *MMONIT_MODE=http | transport mode (http, https) used to communicate with M/Monit    |
 | MMONIT_USERNAME | Username for logging into M/Monit    |
 | MMONIT_PASSWORD | Password for logging into M/Monit    |
+
+`*` - in absence of a `MMONIT_URL` env, it is constructed from `MMONIT_PORT`, `MMONIT_DOMAIN`, `MMONIT_MODE`, `MMONIT_USERNAME` and `MMONIT_PASSWORD`
+
+>[!NOTE]
+> You can set either MMONIT_URL or the composite variables. The option exists for people that want more modularity in their setup.
 
 ### Volume Mappings (-v)
 
@@ -96,7 +104,7 @@ set httpd port ${MONIT_PORT}
 ### `/etc/monit/config/mmonit.cfg`
 
 ```cfg
-set monit ${MMONIT_URL}
+set monit ${MMONIT_URL}/collector
 ```
 
 ## TODO
